@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20160820022840) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.string   "author"
     t.text     "body"
@@ -19,7 +22,7 @@ ActiveRecord::Schema.define(version: 20160820022840) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.string   "author_email"
-    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["post_id"], name: "index_comments_on_post_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -30,4 +33,5 @@ ActiveRecord::Schema.define(version: 20160820022840) do
     t.string   "author"
   end
 
+  add_foreign_key "comments", "posts"
 end
